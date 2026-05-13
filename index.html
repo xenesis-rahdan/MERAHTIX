@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Tiket Pentas Generasi 2026 Teater Lingkar FIB UB</title>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+  <div class="wrapper">
+
+    <!-- Banner Image -->
+    <div class="banner-wrap">
+      <img src="headertix.png" alt="Banner Pentas Generasi 2026" />
+    </div>
+
+  <!-- Event Info Strip -->
+    <div class="event-info">
+      <div class="event-info-item">
+        <span class="ei-emoji">📅</span>
+        <div class="ei-text">
+          <span class="ei-label">Tanggal</span>
+          <span class="ei-value">Minggu, 21 Juni 2026</span>
+        </div>
+      </div>
+      <div class="event-info-item">
+        <span class="ei-emoji">⏰</span>
+        <div class="ei-text">
+          <span class="ei-label">Waktu</span>
+          <span class="ei-value">18.30 WIB</span>
+        </div>
+      </div>
+      <div class="event-info-item full">
+        <span class="ei-emoji">🎪</span>
+        <div class="ei-text">
+          <span class="ei-label">Tempat</span>
+          <span class="ei-value">Aula Gedung B, Fakultas Ilmu Budaya, Universitas Brawijaya</span>
+        </div>
+      </div>
+    </div>
+  
+     <!-- Card -->
+    <div class="card">
+
+      <!-- FORM PAGE -->
+      <div id="page-form">
+        <div id="form-content">
+
+          <!-- INFORMASI PEMBELI -->
+          <div class="section-label">Informasi Pembeli</div>
+
+          <div class="grid-2">
+            <div class="field full">
+              <label>Nama <span class="req">*</span></label>
+              <input type="text" id="name" placeholder="Budi" required />
+            </div>
+            <div class="field full">
+              <label>E-mail <span class="req">*</span></label>
+              <input type="email" id="email" placeholder="contoh@email.com" required />
+            </div>
+            <div class="field full">
+              <label>Nomor Telepon <span class="req">*</span></label>
+              <input type="tel" id="phone" placeholder="081234567890" required />
+            </div>
+          </div>
+
+          <!-- PEMBELIAN TIKET -->
+          <div class="section-label">Pembelian Tiket</div>
+
+          <!-- Soldout notice -->
+          <div class="soldout-notice" id="soldout-notice">
+            🎟️ Tiket telah habis terjual.
+          </div>
+
+          <div style="display:flex; flex-direction:column; gap:10px;">
+            <div class="ticket-row">
+              <div class="ticket-icon">🍿</div>
+              <div class="ticket-info">
+                <div class="t-name" id="ticket-name">Presale</div>
+                <div class="t-price" id="ticket-price">Rp 25,000 / tiket</div>
+                <!-- class="ticket-remaining" id="ticket-remaining">Memuat...-->
+              </div>
+              <div class="qty-control">
+                <button class="qty-btn" onclick="changeQty('ticket', -1)">−</button>
+                <input class="qty-num" id="qty-ticket" type="text" value="0" readonly />
+                <button class="qty-btn" onclick="changeQty('ticket', 1)">+</button>
+              </div>
+            </div>
+          </div>
+
+          <!-- Order Summary -->
+          <div class="summary-box" style="margin-top:16px;">
+            <div class="summary-row"><span>Presale (×<span id="s-ticket">0</span>)</span><span id="sv-ticket">Rp 0</span></div>
+            <div class="summary-row total"><span>Total</span><span class="val" id="sv-total">Rp 0</span></div>
+          </div>
+        
+          <!-- QRIS Pembayaran -->
+          <div class="section-label">QRIS Pembayaran</div>
+          <div class="qr-wrapper">
+            <img src="qrisptg.png" alt="QRIS Pembayaran" />
+          </div>
+
+          <!-- BUKTI PEMBAYARAN -->
+          <div class="section-label">Bukti Pembayaran</div>
+
+          <div class="field full">
+            <label>Unggah Bukti Pembayaran <span class="req">*</span></label>
+            <div class="upload-zone" id="upload-zone">
+              <input type="file" id="payment-proof" accept="image/*,.pdf" onchange="handleFile(this)" />
+              <span class="upload-icon">📎</span>
+              <div class="up-title">Mohon unggah bukti pembayaran di sini</div>
+              <div class="up-sub">atau <span>cari</span> untuk unggah &nbsp;·&nbsp; JPG, PNG, PDF &nbsp;·&nbsp; Max 5MB</div>
+              <div id="file-name"></div>
+            </div>
+          </div>
+
+          <!-- KIRIM -->
+          <button class="submit-btn" onclick="handleSubmit()">
+            Kirim →
+          </button>
+
+          <p class="form-note">
+            Informasi pembeli hanya untuk keperluan pembelian tiket.
+          </p>
+
+      </div><!-- /form-content -->
+
+      <!-- Success Message -->
+      <div class="success-msg" id="success-msg">
+        <div class="check">✓</div>
+        <h2>Pembelian Diterima!</h2>
+        <p>Terima kasih telah membeli tiket Pentas Generasi 2026.<br/>
+        E-ticket akan dikirimkan ke e-mail pembeli dalam jangka waktu <strong>3x24 jam</strong>.<br/>
+        Apabila e-ticket belum dikirimkan dalam jangka waktu tersebut setelah pembelian, harap hubungi narahubung kami.</p>
+      </div>
+    </div><!-- /page-form -->
+
+    <!-- SOLD OUT PAGE  -->
+    <div id="page-soldout">
+      <div class="status-page">
+        <div class="status-icon soldout">🎭</div>
+        <h2>Tiket Habis Terjual!</h2>
+        <p>Sampai jumpa di Pentas Generasi 2026 ya!</p>
+  
+    <!-- Countdown SOLDOUT  -->
+    <div class="countdown" id="countdown-soldout">
+      <div class="countdown-box">
+        <span class="num" id="sd-days">00</span>
+        <span class="label">Hari</span>
+      </div>
+      <div class="countdown-box">
+        <span class="num" id="sd-hours">00</span>
+        <span class="label">Jam</span>
+      </div>
+      <div class="countdown-box">
+        <span class="num" id="sd-minutes">00</span>
+        <span class="label">Menit</span>
+      </div>
+      <div class="countdown-box">
+        <span class="num" id="sd-seconds">00</span>
+        <span class="label">Detik</span>
+      </div>
+    </div>
+
+        <p>Pantau terus media sosial kami untuk informasi selanjutnya.</p>
+
+   </div>
+</div><!-- /page-soldout -->
+
+    <!-- COMING SOON PAGE -->
+    <div id="page-comingsoon">
+      <div class="status-page">
+        <div class="status-icon comingsoon">🕯️</div>
+        <h2>Segera Hadir</h2>
+       <p>Penjualan tiket <strong>Presale</strong> akan segera dibuka pada:</p>
+
+    <!-- Countdown COMING SOON -->
+    <div class="next-sale-btn">
+      <span class="dot"></span>
+      Senin, 18 Mei 2026 - 18.00 WIB.
+    </div>
+    <div class="countdown" id="countdown">
+      <div class="countdown-box">
+        <span class="num" id="cd-days">00</span>
+        <span class="label">Hari</span>
+      </div>
+      <div class="countdown-box">
+        <span class="num" id="cd-hours">00</span>
+        <span class="label">Jam</span>
+      </div>
+      <div class="countdown-box">
+        <span class="num" id="cd-minutes">00</span>
+        <span class="label">Menit</span>
+      </div>
+      <div class="countdown-box">
+        <span class="num" id="cd-seconds">00</span>
+        <span class="label">Detik</span>
+      </div>
+    </div>
+
+       <p>Pantau terus media sosial kami untuk informasi selanjutnya.</p>
+
+  </div>
+</div><!-- /page-comingsoon -->
+
+  </div><!-- /card -->
+
+  <!-- WhatsApp Contact Person -->
+  <div class="wa-contact">
+    <a href="https://wa.me/6283159090985" target="_blank" class="wa-btn">
+      <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+        <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 0 1-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 0 1-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 0 1 2.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0 0 12.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 0 0 5.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 0 0-3.48-8.413z"/>
+      </svg>
+      <div class="wa-label">
+        <span class="wa-role">Narahubung</span>
+        <span class="wa-name">Ajax — 083159090985</span>
+      </div>
+    </a>
+  </div>
+
+  <!-- Social Media Footer -->
+  <div class="social-footer">
+
+    <a href="https://instagram.com/teater.lingkar" target="_blank" class="social-btn">
+      <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+        <path d="M12 2.163c3.204 0 3.584.012 4.85.07 1.366.062 2.633.334 3.608 1.308.975.975 1.246 2.242 1.308 3.608.058 1.266.07 1.646.07 4.85s-.012 3.584-.07 4.85c-.062 1.366-.334 2.633-1.308 3.608-.975.975-2.242 1.246-3.608 1.308-1.266.058-1.646.07-4.85.07s-3.584-.012-4.85-.07c-1.366-.062-2.633-.334-3.608-1.308-.975-.975-1.246-2.242-1.308-3.608C2.175 15.584 2.163 15.204 2.163 12s.012-3.584.07-4.85c.062-1.366.334-2.633 1.308-3.608.975-.975 2.242-1.246 3.608-1.308C8.416 2.175 8.796 2.163 12 2.163zm0-2.163C8.741 0 8.332.013 7.052.072 5.197.157 3.355.673 2.014 2.014.673 3.355.157 5.197.072 7.052.013 8.332 0 8.741 0 12c0 3.259.013 3.668.072 4.948.085 1.855.601 3.697 1.942 5.038 1.341 1.341 3.183 1.857 5.038 1.942C8.332 23.987 8.741 24 12 24c3.259 0 3.668-.013 4.948-.072 1.855-.085 3.697-.601 5.038-1.942 1.341-1.341 1.857-3.183 1.942-5.038.059-1.28.072-1.689.072-4.948 0-3.259-.013-3.668-.072-4.948-.085-1.855-.601-3.697-1.942-5.038C20.645.673 18.803.157 16.948.072 15.668.013 15.259 0 12 0zm0 5.838a6.162 6.162 0 1 0 0 12.324 6.162 6.162 0 0 0 0-12.324zm0 10.162a4 4 0 1 1 0-8 4 4 0 0 1 0 8zm6.406-11.845a1.44 1.44 0 1 0 0 2.881 1.44 1.44 0 0 0 0-2.881z"/>
+      </svg>
+    </a>
+
+    <a href="https://tiktok.com/@teaterlingkar" target="_blank" class="social-btn">
+      <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+        <path d="M19.59 6.69a4.83 4.83 0 0 1-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 0 1-2.88 2.5 2.89 2.89 0 0 1-2.89-2.89 2.89 2.89 0 0 1 2.89-2.89c.28 0 .54.04.79.1V9.01a6.33 6.33 0 0 0-.79-.05 6.34 6.34 0 0 0-6.34 6.34 6.34 6.34 0 0 0 6.34 6.34 6.34 6.34 0 0 0 6.33-6.34V8.69a8.18 8.18 0 0 0 4.78 1.52V6.75a4.85 4.85 0 0 1-1.01-.06z"/>
+      </svg>
+    </a>
+
+    <a href="https://youtube.com/@teaterlingkarfibub9507" target="_blank" class="social-btn">
+      <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+        <path d="M23.495 6.205a3.007 3.007 0 0 0-2.088-2.088c-1.87-.501-9.396-.501-9.396-.501s-7.507-.01-9.396.501A3.007 3.007 0 0 0 .527 6.205a31.247 31.247 0 0 0-.522 5.805 31.247 31.247 0 0 0 .522 5.783 3.007 3.007 0 0 0 2.088 2.088c1.868.502 9.396.502 9.396.502s7.506 0 9.396-.502a3.007 3.007 0 0 0 2.088-2.088 31.247 31.247 0 0 0 .5-5.783 31.247 31.247 0 0 0-.5-5.805zM9.609 15.601V8.408l6.264 3.602z"/>
+      </svg>
+    </a>
+
+  </div><!-- /social-footer -->
+  
+</div><!-- /wrapper -->
+
+<script src="script.js"></script>
+
+</body>
+</html>
