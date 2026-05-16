@@ -1,8 +1,8 @@
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
 :root {
-  --gold:       #FFED00;
-  --gold-light: #FFF176;
+  --light:       #FFED00;
+  --light-2:     #FFF176;
   --dark:       #8B0057;
   --dark-2:     #6A003F;
   --dark-3:     #7A0049;
@@ -62,43 +62,47 @@ body {
   margin-bottom: 18px;
 }
 
-.header h1 {
-  font-family: 'Playfair Display', serif;
-  font-size: clamp(28px, 5vw, 40px);
-  font-weight: 700;
-  line-height: 1.15;
-  color: #FFED00;
-  margin-bottom: 10px;
-  text-shadow: 2px 2px 0px rgba(0,0,0,0.3);
-}
-
-.header h1 span { color: #FFFFFF; }
-
 .card {
-  background: #6A003F;
-  border: 2px solid #FF66B3;
+  background: transparent;
+  border: none;
   border-radius: 4px;
   padding: 36px 40px;
   position: relative;
-  overflow: hidden;
-  box-shadow:
-    0 0 0 4px rgba(255,237,0,0.15),
-    0 8px 40px rgba(0,0,0,0.4);
+  isolation: isolate;
+  box-shadow: 0 8px 40px rgba(0,0,0,0.4);
 }
 
+/* Animated gradient layer — full size, sits behind */
 .card::before {
   content: '';
   position: absolute;
-  top: 0; left: 0; right: 0;
-  height: 4px;
-  background: linear-gradient(90deg, #FF0099, #FFED00, #FF0099, #FFED00, #FF0099);
-  background-size: 200% 100%;
-  animation: shimmer 3s linear infinite;
+  inset: 0;
+  border-radius: 4px;
+  padding: 3px;
+  background: linear-gradient(90deg, #FF0099, #FFED00, #9EF542, #FF0099, #FFED00, #9EF542, #FF0099);
+  background-size: 400% 400%;
+  animation: borderSpin 10s linear infinite;
+  mask: inherit;
+  -webkit-mask:
+    linear-gradient(#fff 0 0) content-box,
+    linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  z-index: -1;
 }
 
-@keyframes shimmer {
-  0% { background-position: 0% 0%; }
-  100% { background-position: 200% 0%; }
+@keyframes borderSpin {
+  0%   { background-position: 0% 50%; }
+  100% { background-position: 400% 50%; }
+}
+
+.card::after {
+  content: '';
+  position: absolute;
+  inset: 3px;
+  background: #6A003F;
+  border-radius: 2px;
+  z-index: -1;
 }
 
 .section-label {
@@ -512,7 +516,7 @@ input[type="number"]::-webkit-outer-spin-button {
   display: block;
 }
 
-/* ── Event Info Strip ── */
+/* ── Event Info ── */
 .event-info {
   display: grid;
   grid-template-columns: 1fr 1fr;
@@ -572,7 +576,7 @@ input[type="number"]::-webkit-outer-spin-button {
   display: flex;
   align-items: center;
   gap: 10px;
-  padding: 11px 24px;
+  padding: 11px 15px;
   background: rgba(37,211,102,0.1);
   border: 1.5px solid rgba(37,211,102,0.5);
   border-radius: 2px;
@@ -628,7 +632,7 @@ input[type="number"]::-webkit-outer-spin-button {
   display: flex;
   align-items: center;
   gap: 7px;
-  padding: 9px 18px;
+  padding: 9px 10px;
   border-radius: 2px;
   border: 1px solid #FF66B3;
   background: rgba(255,102,179,0.1);
