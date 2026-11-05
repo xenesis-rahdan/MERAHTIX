@@ -9,7 +9,7 @@
   document.getElementById('ticket-price').textContent = 'Rp ' + TICKET_PRICE.toLocaleString('id-ID') + ' / tiket';
 
   // ── Apps Script URL ──
-  const APPS_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbxRe18WE5j9-yHxCEyWg4obC-MCI3oVk4-jZEq__EeqHdu4aYtx9japEHhAb-UWlu-qow/exec";
+  const APPS_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbxzIRCZjVho54Pd6cXXkL8lsxDF_CTMzsCI2WWWKyleoNBPzCPYNMzdwhr3fRP4hyF2PQ/exec";
 
   // Pages start all hidden — fetch decides which one to show
   document.getElementById('page-form').style.display       = 'none';
@@ -17,34 +17,63 @@
   document.getElementById('page-comingsoon').style.display = 'none';
 
   // ── FETCH 1 ──
-  fetch(APPS_SCRIPT_URL)
+fetch(APPS_SCRIPT_URL)
     .then(res => res.json())
     .then(data => {
       const remaining = data.remaining;
 
-      if (STATUS === "soldout") {
+      if (STATUS === "soldout" || remaining <= 0) {
         document.getElementById('page-soldout').style.display = 'block';
+
+        var countDownDate = new Date("June 21, 2027 18:30:00").getTime();
+        var soldoutInterval = setInterval(function() {
+          var now      = new Date().getTime();
+          var distance = countDownDate - now;
+
+          if (distance < 0) {
+            clearInterval(soldoutInterval);
+            var el = document.getElementById('countdown-soldout');
+            if (el) el.innerHTML = '<p class="countdown-expired">Penjualan tiket berikutnya telah dibuka! 🎭</p>';
+            return;
+          }
+
+          var days    = Math.floor(distance / (1000 * 60 * 60 * 24));
+          var hours   = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+          var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+          var seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+          var sd = document.getElementById('sd-days');
+          var sh = document.getElementById('sd-hours');
+          var sm = document.getElementById('sd-minutes');
+          var ss = document.getElementById('sd-seconds');
+
+          if (sd) sd.textContent = String(days).padStart(2, '0');
+          if (sh) sh.textContent = String(hours).padStart(2, '0');
+          if (sm) sm.textContent = String(minutes).padStart(2, '0');
+          if (ss) ss.textContent = String(seconds).padStart(2, '0');
+        }, 1000);
+
         return;
       }
+
       if (STATUS === "comingsoon") {
         document.getElementById('page-comingsoon').style.display = 'block';
         return;
       }
-      if (remaining <= 0) {
-        document.getElementById('page-soldout').style.display = 'block';
-        return;
-      }
+
       document.getElementById('page-form').style.display = 'block';
       const el = document.getElementById('ticket-remaining');
-      if (remaining <= 5) {
-        el.textContent = 'Tersisa ' + remaining + ' tiket!';
-        el.className   = 'ticket-remaining low';
-      } else if (remaining <= 10) {
-        el.textContent = 'Tersisa ' + remaining + ' tiket';
-        el.className   = 'ticket-remaining mid';
-      } else {
-        el.textContent = 'Tersisa ' + remaining + ' tiket';
-        el.className   = 'ticket-remaining ok';
+      if (el) {
+        if (remaining <= 5) {
+          el.textContent = 'Tersisa ' + remaining + ' tiket!';
+          el.className   = 'ticket-remaining low';
+        } else if (remaining <= 10) {
+          el.textContent = 'Tersisa ' + remaining + ' tiket';
+          el.className   = 'ticket-remaining mid';
+        } else {
+          el.textContent = 'Tersisa ' + remaining + ' tiket';
+          el.className   = 'ticket-remaining ok';
+        }
       }
     })
     .catch(() => {
@@ -56,7 +85,7 @@
   // Format: "Month Day, Year HH:MM:SS"
 
  if (STATUS === "soldout") {
-  var countDownDate = new Date("June 21, 2027 18:00:00").getTime();
+  var countDownDate = new Date("June 21, 2026 18:30:00").getTime();
 
   var countdownInterval = setInterval(function() {
     var now      = new Date().getTime();
@@ -82,7 +111,7 @@
  }
 
  if (STATUS === "comingsoon") {
-  var countDownDate = new Date("May 18, 2027 18:00:00").getTime();
+  var countDownDate = new Date("June 2, 2026 18:00:00").getTime();
 
   var countdownInterval = setInterval(function() {
     var now      = new Date().getTime();
