@@ -1,9 +1,9 @@
   // CHANGE TO SWITCH PAGES
   // Options: "open" / "soldout" / "comingsoon"
   const STATUS        = "open";
-  const CATEGORY_NAME = "Presale";
+  const CATEGORY_NAME = "Reguler";
   const TICKET_PRICE  = 25000;
-  const MAX_QTY       = 1;
+  const MAX_QTY       = 5;
 
   document.getElementById('ticket-name').textContent  = CATEGORY_NAME;
   document.getElementById('ticket-price').textContent = 'Rp ' + TICKET_PRICE.toLocaleString('id-ID') + ' / tiket';
@@ -56,7 +56,7 @@
   // Format: "Month Day, Year HH:MM:SS"
 
  if (STATUS === "soldout") {
-  var countDownDate = new Date("June 21, 2026 18:00:00").getTime();
+  var countDownDate = new Date("June 21, 2027 18:00:00").getTime();
 
   var countdownInterval = setInterval(function() {
     var now      = new Date().getTime();
@@ -82,7 +82,7 @@
  }
 
  if (STATUS === "comingsoon") {
-  var countDownDate = new Date("May 18, 2026 18:00:00").getTime();
+  var countDownDate = new Date("May 18, 2027 18:00:00").getTime();
 
   var countdownInterval = setInterval(function() {
     var now      = new Date().getTime();
